@@ -2,6 +2,13 @@ import os
 
 import setuptools
 
+# FOR DEBUGGING THE INSTALLATION
+if os.environ.get("DEBUG") == "1":  # use --test_env=DEBUG=1 for bazel test
+    import debugpy
+    debugpy.listen(5678)  # port should correspond to .vscode/launch.json
+    print("Waiting to attach debugger...")
+    debugpy.wait_for_client()
+
 with open('../README.md', 'r') as fh:
     long_description = fh.read()
 
@@ -13,6 +20,8 @@ for req_path in req_paths:
     if req_path.startswith('#'):
         continue
     req_path = req_path.replace('-r ', '')
+    req_path = req_path.split(' ', 1)[0]  # remove stuff after space
+
     with open(req_path) as f:
         requirements += f.read().splitlines()
 
