@@ -122,6 +122,7 @@ class MOTAccumulatorCustom(motmetrics.mot.MOTAccumulator):
                 copy['HId'] = copy['HId'].map(lambda x: hid_map[x], na_action='ignore')
                 infos['hid_map'] = hid_map
 
+            copy = copy.dropna(axis=1, how='all')
             r = pd.concat((r, copy))
             mapping_infos.append(infos)
 
