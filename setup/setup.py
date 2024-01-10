@@ -40,7 +40,7 @@ def get_dirlist(_rootdir):
 
 # Get subfolders recursively
 os.chdir('..')
-rootdir = 'python-sdk'
+rootdir = 'python_sdk'
 packages = [d.replace('/', '.').replace('{}.'.format(rootdir), '') for d in get_dirlist(rootdir)]
 
 # Filter out Python cache folders
@@ -60,7 +60,7 @@ setuptools.setup(
     python_requires='>=3.6',
     install_requires=requirements,
     packages=packages,
-    package_dir={'': 'python-sdk'},
+    package_dir={'': 'python_sdk'},
     package_data={'': ['*.json']},
     include_package_data=True,
     classifiers=[

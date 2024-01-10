@@ -8,7 +8,7 @@ https://stackoverflow.com/questions/72715462/how-to-install-this-python-package-
 Therefore, using this setup file instead.
 """
 
-package_dir = 'python-sdk'
+package_dir = 'python_sdk'
 setup_dir = Path(__file__).parent / 'setup'
 
 # Since nuScenes 2.0 the requirements are stored in separate files.
