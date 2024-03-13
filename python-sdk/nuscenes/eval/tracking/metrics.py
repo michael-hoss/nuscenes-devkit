@@ -171,6 +171,9 @@ def motp_custom(df: DataFrame, num_detections: float) -> float:
 def faf(df: DataFrame, num_false_positives: float, num_frames: float) -> float:
     """
     The average number of false alarms per frame.
+    This value is multiplied by 100 for better readability and consistency with
+    FAF in other challenges, see https://github.com/nutonomy/nuscenes-devkit/issues/319.
+
     :param df: Motmetrics dataframe that is required, but not used here.
     :param num_false_positives: The number of false positives.
     :param num_frames: The number of frames.
