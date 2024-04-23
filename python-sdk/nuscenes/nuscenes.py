@@ -583,8 +583,9 @@ class NuScenes:
                              imsize: Tuple[float, float] = (640, 360), out_path: str = None) -> None:
         self.explorer.render_scene_channel(scene_token, channel=channel, freq=freq, imsize=imsize, out_path=out_path)
 
-    def render_egoposes_on_map(self, log_location: str, scene_tokens: List = None, out_path: str = None) -> None:
-        self.explorer.render_egoposes_on_map(log_location, scene_tokens, out_path=out_path)
+    def render_egoposes_on_map(self, log_location: str, scene_tokens: List = None, out_path: str = None,
+                               close_dist: float = 100) -> None:
+        self.explorer.render_egoposes_on_map(log_location, scene_tokens, close_dist=close_dist, out_path=out_path)
 
     def render_scene_channel_lidarseg(self, scene_token: str,
                                       channel: str,
@@ -803,7 +804,7 @@ class NuScenesExplorer:
         recs = [(self.nusc.get('sample', record['first_sample_token'])['timestamp'], record) for record in
                 self.nusc.scene]
 
-        for start_time, record in sorted(recs):
+        for start_time, record in sorted(recs, key=lambda rec: rec[0]):
             start_time = self.nusc.get('sample', record['first_sample_token'])['timestamp'] / 1000000
             length_time = self.nusc.get('sample', record['last_sample_token'])['timestamp'] / 1000000 - start_time
             location = self.nusc.get('log', record['log_token'])['location']
@@ -1846,6 +1847,9 @@ class NuScenesExplorer:
             # Monochrome maps.
             # Set the colors for the mask.
             mask = Image.fromarray(map_mask.mask())
+            if mask.mode == 'LA':  # luminance + alpha
+                # Remove alpha channel to only get luminance
+                mask = mask.convert('L')
             mask = np.array(mask)
 
             maskr = color_fg[0] * np.ones(np.shape(mask), dtype=np.uint8)
