@@ -40,3 +40,15 @@ py_test(
     ],
     imports = ["../../../.."], # add this to PYTHONPATH, relative to this BUILD file
 )
+
+py_library(
+    name = "custom_data_eval_lib",
+    srcs = [
+        "custom_data_eval_config.py",
+        "obtain_tracking_metrics.py",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":evaluate_tracking",
+    ],
+)
