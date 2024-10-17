@@ -13,8 +13,10 @@ class CustomDataEvalConfig:
         nuscenes_eval_config_path: str,
     ) -> None:
         """Config for
-        1) conversion of custom data to nuScenes tracking format on disc (TODO by the developer)
-        2) subsequent evaluation of nuscenes tracking metrics on those converted data (provided here).
+        1) Conversion of custom data to nuScenes tracking format on disc 
+           (Not provided here. You have to implement this for your own data.)
+        2) Subsequent evaluation of nuscenes tracking metrics on those converted data 
+           (provided here).
 
         This class assumes that the actual custom data is stored in subdirs named subdir_pattern.
         For each of these subdirs, the converter should create a separate nuscenes-compliant subdir.

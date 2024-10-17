@@ -40,6 +40,6 @@ def nuscenes_devkit_tracking_eval(
         verbose=params.verbose,
         render_classes=params.render_classes,  # type: ignore
     )
-    # If we don't want the file io, we can also just call .evaluate() on the tracking_eval_object
+    # .main() calls .evaluate() and outputs to json files.
     metrics_summary: MetricsSummary = tracking_eval_object.main()
     return metrics_summary
