@@ -6,6 +6,7 @@ py_test(
         "//python-sdk/nuscenes",
     ],
     imports = ["../.."], # add this to PYTHONPATH, relative to this BUILD file
+    tags = ["manual"], # manual in case one intentionally has only a partial download
 )
 
 py_test(
