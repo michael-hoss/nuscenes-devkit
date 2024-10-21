@@ -31,8 +31,8 @@ py_binary(
 )
 
 py_test(
-    name = "evaluate_tracking_unit_test",
-    srcs = ["evaluate_tracking_unit_test.py"],
+    name = "evaluate_tracking_test",
+    srcs = ["evaluate_tracking_test.py"],
     visibility = ["//visibility:public"],
     deps = [
         ":evaluate_tracking",

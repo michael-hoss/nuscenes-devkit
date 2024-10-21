@@ -33,13 +33,14 @@ def obtain_metrics_for_nuscenes_version_dirs(custom_data_eval_config: CustomData
 
     with Progress(refresh_per_second=2) as progress:
         dir_task = progress.add_task("[blue]Obtaining nuScenes metrics...", total=len(matching_dirs))
-        for artery_config in matching_dirs:
+        for subdir_path in matching_dirs:
+            subdir_name: str = path.basename(subdir_path)
             metrics_of_splits: dict[str, Any] = obtain_metrics_for_all_splits(
-                subdir_name=artery_config,
+                subdir_name=subdir_name,
                 conversion_config=custom_data_eval_config,
                 progress=progress,
             )
-            metrics_of_configs[artery_config] = metrics_of_splits
+            metrics_of_configs[subdir_name] = metrics_of_splits
             progress.update(dir_task, advance=1)
         return metrics_of_configs
 
@@ -77,7 +78,7 @@ def obtain_metrics_for_split(
     subdir_name: str, conversion_config: CustomDataEvalConfig, eval_split: str = "all"
 ) -> MetricsSummary:
     tracking_eval_params = TrackingEvalParams(
-        result_path=conversion_config.get_tracking_result_path(data_config=subdir_name),
+        result_path=conversion_config.get_tracking_result_path(subdir_name=subdir_name),
         output_dir=conversion_config.get_metrics_output_dir(subdir_name, eval_split),
         eval_set=eval_split,  # see python-sdk/nuscenes/utils/splits.py
         nusc_dataroot=conversion_config.nuscenes_format_root_dir,
