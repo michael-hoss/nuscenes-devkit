@@ -189,7 +189,6 @@ def dump_to_nuscenes_dir(nuscenes_all: NuScenesAll, nuscenes_version_dir: str, f
         json.dump(nuscenes_all.submission.to_dict(), json_file, indent=common_indent)
 
     # Dump map file
-    # map_path = os.path.join(nuscenes_version_dir, ARTERY_CONSTANTS.map_filename)
     for map in nuscenes_all.reference.maps:
         # avoid ns  version dir twice in the path
         png_path = os.path.normpath(os.path.join(nuscenes_version_dir, "..", map.filename))

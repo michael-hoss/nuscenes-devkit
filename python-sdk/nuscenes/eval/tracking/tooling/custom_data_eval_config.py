@@ -61,7 +61,7 @@ class CustomDataEvalConfig:
     @staticmethod
     def read_cli() -> Any:
         parser = argparse.ArgumentParser(
-            description="Wrap entire data processing, from the raw artery logs to the tracking metrics from the nuscenes-devkit fork."
+            description="Arguments to specify the evaluation of 3D MOT metrics on custom data using the nuscenes-devkit fork."
         )
 
         parser.add_argument(
