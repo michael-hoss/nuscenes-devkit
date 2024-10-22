@@ -6,7 +6,7 @@ py_test(
         "//python-sdk/nuscenes",
     ],
     imports = ["../.."], # add this to PYTHONPATH, relative to this BUILD file
-    tags = ["manual"], # manual in case one intentionally has only a partial download
+    tags = ["manual", "requires_dataset"], # manual in case one intentionally has only a partial download
 )
 
 py_test(
@@ -20,6 +20,7 @@ py_test(
     env = {
         "NUSCENES": "/data/sets/nuscenes",
     },
+    tags = ["requires_dataset"],
 )
 
 py_test(
@@ -33,6 +34,7 @@ py_test(
     env = {
         "NUSCENES": "/data/sets/nuscenes",
     },
+    tags = ["requires_dataset"],
 )
 
 py_test(
@@ -47,4 +49,5 @@ py_test(
     env = {
         "NUSCENES": "/data/sets/nuscenes",
     },
+    tags = ["requires_dataset"],
 )
