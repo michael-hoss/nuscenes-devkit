@@ -4,7 +4,6 @@ from typing import Any, Optional
 from nuscenes.eval.tracking.tooling.nuscenes_format import TrackingSubmission
 
 
-
 class CustomDataEvalConfig:
     def __init__(
         self,
@@ -13,38 +12,33 @@ class CustomDataEvalConfig:
         force_regenerate: bool = False,
         nuscenes_eval_config_path: Optional[str] = None,
     ) -> None:
-        """Config for
-        1) Conversion of custom data to nuScenes tracking format on disc 
-           (You can use this config for the conversion of your own data)
-        2) Subsequent evaluation of nuscenes tracking metrics on those converted data 
-           (provided here)
-
-        This class assumes that the actual custom data is stored in subdirs named subdir_pattern.
-        For each of these subdirs, the converter should create a separate nuscenes-compliant subdir.
+        """Config for evaluation of nuscenes tracking metrics on own converted data.
+        Please read the comments for 
         """
 
         # Root dir of custom data
-        self.data_root = data_root
+        self.data_root: str = data_root
 
-        # Pattern for subdirectories of original data, which will be converted to separate nuScenes dirs.
-        # These subdirs will act as different nuscenes dataset versions (as e.g. `v1.0-mini` in the original)
-        self.subdir_pattern = subdir_pattern or "*"
+        # Name pattern for nuScenes "version dirs" to evaluate in, as e.g. `v1.0-mini`
+        # These subdirs are one level below data_root
+        # Wildcards like * and ?? are supported, but not regex.
+        self.subdir_pattern: str = subdir_pattern or "*"
 
-        # Force the re-generation of converted data or tracking metrics, rather than reading cached results from disc.
-        # This flag is used by the metrics computation, and can also be implemented by a custom converter.
-        self.force_regenerate = force_regenerate
+        # Force the re-generation of tracking metrics, rather than reading cached metrics from disc.
+        self.force_regenerate: bool = force_regenerate
 
         # Path to JSON config for tracking evaluation, as expected by nuscenes-devkit
-        self.nuscenes_eval_config_path = nuscenes_eval_config_path or "configs/tracking_nips_2019.json"
+        # If None, the default nuscenes config is used
+        self.nuscenes_eval_config_path: Optional[str] = nuscenes_eval_config_path
 
         # Convention for naming of data under test
-        self.tracking_results_filename = TrackingSubmission.json_filename
+        self.tracking_results_filename: str = TrackingSubmission.json_filename
 
         # Store nuScenes data below original data in a subdir
-        self.nuscenes_format_root_dir = path.join(self.data_root, "nuscenes")
+        self.nuscenes_format_root_dir: str = path.join(self.data_root, "nuscenes")
 
         # Subdir where tracking metrics output files will be saved to
-        self.metrics_output_dir = "tracking_metrics"
+        self.metrics_output_dir: str = "tracking_metrics"
 
     def get_tracking_result_path(self, subdir_name: str) -> str:
         return path.join(self.nuscenes_format_root_dir, subdir_name, self.tracking_results_filename)
@@ -67,18 +61,18 @@ class CustomDataEvalConfig:
         parser.add_argument(
             "--data-root",
             type=str,
-            help="Root directory to the custom data (input data)",
+            help="Root directory to the custom data",
         )
         parser.add_argument(
             "--force-regenerate",
             action="store_true",
-            help="If flag is set, regenerates all data from scratch",
+            help="If flag is set, regenerates all metrics from scratch",
         )
 
         parser.add_argument(
             "--subdir-pattern",
             type=str,
-            help="Name pattern for individual subdirectories to be converted to nuscenes and evaluated",
+            help="Name pattern for individual subdirectories of data-root to be evaluated.",
         )
 
         parser.add_argument(

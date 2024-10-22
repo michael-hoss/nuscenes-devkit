@@ -10,12 +10,15 @@ from nuscenes.eval.tracking.tooling.nuscenes_format import MetricsSummary, Track
 Like this, I can call my own function and don't have to use their interface in the rest of my code."""
 
 
-def get_nuscenes_tracking_config_from_own_file(config_path: str) -> TrackingConfig:
-    """Get the nuscenes tracking config from a file in the repo.
+def get_nuscenes_tracking_config(config_path: str| None) -> TrackingConfig:
+    """Get the nuscenes tracking config from an own file.
 
     Args:
-        config_path: The path to the file.
+        config_path: The path to the file (if relative, below the current working directory).
     """
+    if not config_path:
+        return get_official_tracking_config()
+
     with open(config_path, "r") as _f:
         return TrackingConfig.deserialize(json.load(_f))  # type: ignore
 
@@ -40,6 +43,6 @@ def nuscenes_devkit_tracking_eval(
         verbose=params.verbose,
         render_classes=params.render_classes,  # type: ignore
     )
-    # .main() calls .evaluate() and outputs to json files.
+    # .main() calls .evaluate() and outputs to json files and pdf plots.
     metrics_summary: MetricsSummary = tracking_eval_object.main()
     return metrics_summary

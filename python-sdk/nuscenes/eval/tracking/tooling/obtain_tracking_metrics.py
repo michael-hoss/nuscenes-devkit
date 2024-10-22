@@ -6,7 +6,7 @@ from typing import Any
 from nuscenes.eval.tracking.tooling.evaluate_tracking import (
     MetricsSummary,
     TrackingConfig,
-    get_nuscenes_tracking_config_from_own_file,
+    get_nuscenes_tracking_config,
     nuscenes_devkit_tracking_eval,
 )
 from nuscenes.eval.tracking.tooling.nuscenes_format import TrackingEvalParams
@@ -88,7 +88,7 @@ def obtain_metrics_for_split(
     if not conversion_config.force_regenerate and metrics_files_present_on_disk(tracking_eval_params):
         return read_metrics_from_disk(tracking_eval_params)
 
-    config: TrackingConfig = get_nuscenes_tracking_config_from_own_file(
+    config: TrackingConfig = get_nuscenes_tracking_config(
         config_path=conversion_config.nuscenes_eval_config_path
     )
     with suppress_output():
