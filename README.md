@@ -1,3 +1,6 @@
+[![Pytests with bazel](https://github.com/michael-hoss/nuscenes-devkit/actions/workflows/pytest_with_bazel.yaml/badge.svg)](https://github.com/michael-hoss/nuscenes-devkit/actions/workflows/pytest_with_bazel.yaml)
+
+
 # <img src="docs/nutonomy-logo-big-r.svg" width="182px" height="46px" style="vertical-align: middle" /> nuScenes™ devkit
 Welcome to the nuTonomy® downloadable driverless vehicle software page. Click on the green box above labeled "Code" to download a copy of the software described below.
 
